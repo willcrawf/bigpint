@@ -7,6 +7,11 @@ export default function UserPhotos({ user }) {
         const photos = await photoService.getGPhotos()
         setPhotos(photos)
     }
+    async function searchExif(img) {
+        console.log('in component searchExif')
+        const exifData = await photoService.getExif(img)
+        console.log(exifData)
+    }
     return (
         <>
         {user ?
@@ -16,7 +21,7 @@ export default function UserPhotos({ user }) {
             <>
             {photos.length ? 
             <>
-                {photos.map(photo => <img src={photo.baseUrl} alt=""/>)}
+                {photos.map((photo, i) => <button onClick={() => searchExif(`PIC_${i}`)}><img id={`PIC_${i}`} src={photo.baseUrl} alt=""/></button>)}
             </>
                 :
                 <h3>no photos</h3> 
