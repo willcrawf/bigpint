@@ -23,7 +23,7 @@ async function returnGPhotos(req, res) {
                 })
                 photos = photos.concat(result.mediaItems)
                 parameters.pageToken = result.nextPageToken
-            } while (photos.length < 100 && parameters.pageToken != null)
+            } while (photos.length < 400 && parameters.pageToken != null)
         } catch (err) {console.log(err)}
         res.status(200).json({ photos })
 }
