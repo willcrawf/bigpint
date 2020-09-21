@@ -5,9 +5,15 @@ const SALT_ROUNDS = 7;
 
 const userSchema = new Schema({
     name: String,
-    email: {type: String, required: true, unique: true, lowercase: true},
+    email: {type: String, unique: true, lowercase: true},
     password: String,
-    photos: {type: [Schema.Types.ObjectId], ref: 'Photo', default: []}
+    photos: {type: [Schema.Types.ObjectId], ref: 'Photo', default: []},
+    gId: String,
+    gName: String,
+    // gEmail: String,
+    token: String,
+    gRefreshToken: String,
+    profile: Object,
 }, {timestamps: true})
 
 userSchema.set('toJSON', {

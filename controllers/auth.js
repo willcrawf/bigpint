@@ -30,6 +30,18 @@ const login = ({ body }, res) => {
     } catch (err) {res.status(401).json(err)}
 }
 
+const updateUser = async (req, res) => {
+    console.log(`in the backend update user google user`)
+    const { gId, user } = req.body
+    const gUser = await User.findOneAndDelete({ gId: gId })
+    if (!gUser) return res.status(401).json({ err: `bad id's` })
+    const comboUser = await User.findOneAndUpdate({ _id: user._id }, { gId: gUser.gId, gName: gUser.gName, token: gUser.token, gRefreshToken: gUser.gRefreshToken, profile: gUser.profile}, {new: true})
+    console.log(`made combo user; name ${comboUser.name} and gId ${comboUser.gId}`)
+    const token = createJwt(comboUser)
+    res.json({ token })
+
+}
+
 function createJwt(user) {
     return jwt.sign(
         {user},
@@ -38,4 +50,4 @@ function createJwt(user) {
     )
 }
 
-module.exports = { getUser, signup, login }
+module.exports = { getUser, signup, login, updateUser }

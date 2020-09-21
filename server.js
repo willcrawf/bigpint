@@ -1,3 +1,4 @@
+const User = require('./models/user')
 const path = require('path')
 const express = require('express')
 const logger = require('morgan')
@@ -63,7 +64,11 @@ app.get(
     '/auth/google/callback',
     passport.authenticate('google', {failureRedirect: 'http://localhost:3000', failureFlash: true, session: true}),
     (req, res) => {
-      console.log('user has logged in')
+      if (!req.user.name) {
+        console.log(`redirecting from google login, name ${req.user.name} and gId ${req.user.gId}`)
+        return res.redirect(`http://localhost:3000/google/${req.user.gId}`);
+      }
+      console.log(`user has logged in no update, name ${req.user.name} and gId ${req.user.gId}`)
       res.redirect('http://localhost:3000');
     });
 

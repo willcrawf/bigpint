@@ -1,4 +1,5 @@
-import { token } from 'morgan'
+import React from 'react'
+import UserPhotos from '../Components/UserPhotos/UserPhotos'
 import * as tokenService from './tokenService'
 const BASE_URL = '/api/auth/'
 
@@ -29,6 +30,22 @@ export function login(info) {
     .then(({ token }) => tokenService.setToken(token))
 }
 
+export function combineUser(gId, user) {
+    const fetchObject = { gId, user }
+    fetch(BASE_URL + 'updateUser', {
+        method: 'POST',
+        headers: new Headers({'Content-Type': 'application/json'}),
+        body: JSON.stringify(fetchObject)
+    })
+    .then(resp => 'a')
+    // .then(res => {
+    //     if (res.ok) return res.json()
+    //     throw new Error('bad creds')
+    // })
+    // .then(({ token }) => tokenService.setToken(token))
+}
+
 export function logout() {
     tokenService.removeToken()
 }
+

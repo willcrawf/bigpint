@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Redirect, Route, Switch, useParams } from 'react-router-dom'
 import NavBar from '../../Components/NavBar/NavBar';
 import Signup from '../Signup/Signup'
 import Login from '../Login/Login'
@@ -9,37 +9,44 @@ import './App.css';
 import * as authService from '../../service/authService'
 
 
-class App extends Component {
-  state = {
-    user: authService.getUser()
-  }
+export default function App(props) {
+  const [user, setUser] = useState(authService.getUser())
 
-  handleSignupLogin = () => {
-    this.setState({user: authService.getUser()})
+  
+  function handleSignupLogin() {
+    setUser(authService.getUser())
   }
-  handleLogout = () => {
+  function handleLogout() {
     authService.logout()
-    this.setState({user: null})
+    setUser(null)
   }
-  render() {
-    const { user } = this.state;
+  
   return (
     <>
-    <NavBar user={user} handleLogout={this.handleLogout} />
+    <NavBar user={user} handleLogout={handleLogout} />
       <UserPhotos user={user}/>
+      {props.match || 'nope'}
       <Route 
         exact path="/signup"
         render={() => 
-          <Signup history={this.props.history} handleSignupLogin={this.handleSignupLogin}/>
+          <Signup history={props.history} handleSignupLogin={handleSignupLogin}/>
         }/>
         <Route 
         exact path="/login"
         render={() => 
-          <Login history={this.props.history} handleSignupLogin={this.handleSignupLogin}/>
+          <Login history={props.history} handleSignupLogin={handleSignupLogin}/>
         }/>
+        <Switch>
+          <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}/>
+        </Switch>
     </>
   );
 }
+
+function CombineUser(user, setUser) {
+  let { gId } = useParams()
+  console.log(gId)
+  authService.combineUser(gId, user)
+  return null
 }
 
-export default App;
