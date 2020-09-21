@@ -25,14 +25,12 @@ export default function App(props) {
   
   return (
     <>
-    {/*
-    form to upload pics
-    <form action="/upload" method="post" enctype="multipart/form-data">
+    <form action="/upload" method="POST" encType="multipart/form-data">
       <input type="file" accept="image/*" name="photo" />
       <input type="submit" value="upload" />
     </form>
-    button to fetch top 10
-    <button onClick={bill}>Top 10</button> */}
+    //button to fetch top 10
+    //<button onClick={getBill}>Top 10</button>
     <NavBar user={user} handleLogout={handleLogout} />
       <UserPhotos user={user} />
       {/* {props.match || 'nope'} */}
