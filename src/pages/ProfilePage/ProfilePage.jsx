@@ -4,6 +4,7 @@ import FavoriteDates from '../../Components/FavoriteDates/FavoriteDates'
 
 function ProfilePage(props) {
         function sortPhotosByDate(datePicked) {
+                return datePicked.toLocaleDateString
                 console.log(`sorting photos by date ${datePicked}`)
         }
         return ( 
