@@ -36,6 +36,12 @@ export default function App(props) {
         render={() => 
           <Login history={props.history} handleSignupLogin={handleSignupLogin}/>
         }/>
+        <Route 
+        exact path="/login"
+        render={() => 
+          <Profile
+          user = {user} />
+        }/>
         <Switch>
           <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}/>
         </Switch>
