@@ -1,17 +1,17 @@
-module.exports={uploading}
-const fs=require('fs')
+module.exports = { uploading }
+const fs = require('fs')
 
 function uploading(req,res)
 {
    //finds original file extension
    let ext = req.file.mimetype.split('/');
    //file name assigned by multer in (images) directory
-   let oldn = '.\\'+req.file.path;
+   let oldn = '.\\' + req.file.path;
    //file name with original extention added
-   let newn = oldn+'.'+ext[1];
+   let newn = oldn + '.' + ext[1];
    //redirecting and renaming and then assigning pic stuff
    res.redirect('/');
-   fs.rename(oldn,newn,function(err){if(err)throw err});
+   fs.rename(oldn, newn, function(err) {if(err)throw err});
    res.json(req.file);
 }
 //
