@@ -6,7 +6,6 @@ export default function NavBar({ user, handleLogout }) {
     <nav id="nav">
       {user ? 
       <>
-      <NavLink exact to="/">Home</NavLink>
       <div>Welcome: {user.name}</div>
       <NavLink exact to="/" onClick={handleLogout}>Logout</NavLink>
       <NavLink exact to="/profile">Profile</NavLink>
