@@ -1,4 +1,3 @@
-const User = require('./models/user')
 const path = require('path')
 const express = require('express')
 const logger = require('morgan')

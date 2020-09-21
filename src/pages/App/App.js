@@ -25,8 +25,8 @@ export default function App(props) {
   return (
     <>
     <NavBar user={user} handleLogout={handleLogout} />
-      <UserPhotos user={user}/>
-      {props.match || 'nope'}
+      <UserPhotos user={user} />
+      {/* {props.match || 'nope'} */}
       <Route 
         exact path="/signup"
         render={() => 
@@ -39,7 +39,7 @@ export default function App(props) {
         }/>
         
         <Switch>
-          <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}/>
+          <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}></Route>
         </Switch>
 
         <Route 

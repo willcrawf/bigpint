@@ -34,7 +34,7 @@ const updateUser = async (req, res) => {
     console.log(`in the backend update user google user`)
     const { gId, user } = req.body
     const gUser = await User.findOneAndDelete({ gId: gId })
-    if (!gUser) return res.status(401).json({ err: `bad id's` })
+    console.log('from backend update user' + gUser.gId)
     const comboUser = await User.findOneAndUpdate({ _id: user._id }, { gId: gUser.gId, gName: gUser.gName, token: gUser.token, gRefreshToken: gUser.gRefreshToken, profile: gUser.profile}, {new: true})
     console.log(`made combo user; name ${comboUser.name} and gId ${comboUser.gId}`)
     const token = createJwt(comboUser)
