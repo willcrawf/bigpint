@@ -11,7 +11,7 @@ import * as authService from '../../service/authService'
 
 
 export default function App(props) {
-  let [user, setUser] = useState(authService.getUser())
+  const [user, setUser] = useState(authService.getUser())
 
   
   function handleSignupLogin() {
