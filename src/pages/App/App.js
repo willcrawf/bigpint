@@ -46,7 +46,7 @@ export default function App(props) {
         exact path="/profile"
         render={() => 
           <ProfilePage
-          user = {user} />
+          user={user} />
         }/>
     </>
   );
@@ -55,6 +55,6 @@ export default function App(props) {
 function CombineUser(user, setUser) {
   let { gId } = useParams()
   console.log(gId)
-  authService.combineUser(gId, user)
+  // authService.combineUser(gId, user)
   return null
 }
