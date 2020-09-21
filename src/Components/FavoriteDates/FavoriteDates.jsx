@@ -1,6 +1,7 @@
 import React from 'react'
 import{ Menu } from 'semantic-ui-react'
 import './FavoriteDates.css'
+var dateFormat = require('dateformat');
 
 function FavoriteDates({ user, sortPhotosByDate }) {
     return (
@@ -10,7 +11,7 @@ function FavoriteDates({ user, sortPhotosByDate }) {
         <Menu color = 'blue'>
             {user.favDates.map(favDate => 
                 <Menu.Item
-                    onClick={() => sortPhotosByDate(favDate)}>{favDate}
+                    onClick={() => sortPhotosByDate(favDate)}>{dateFormat(favDate, "fullDate")}
                  </Menu.Item>
             )}
         </Menu>
