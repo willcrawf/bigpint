@@ -1,14 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-const AddFavoriteDate = (user) => {
+const AddFavoriteDate = ({ user }) => {
+    const [favDate, setFavDate] = useState('')
+    
     return (
-        <form>
-        <div>
-            <input name="favDates" id="favDates" type="date" className="active" value='favDates'  />
-            <label htmlFor="favDates">Add Fav. Date</label>
-        </div>
-            <button type="submit">Add</button>
-        </form>
+       <>
+       </>
       );
 }
  
