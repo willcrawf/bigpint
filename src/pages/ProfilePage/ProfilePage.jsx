@@ -3,8 +3,8 @@ import * as authService from '../../service/authService'
 import FavoriteDates from '../../Components/FavoriteDates/FavoriteDates'
 
 function ProfilePage(props) {
-        function sortPhotosByDate() {
-                console.log('sorting photos')
+        function sortPhotosByDate(datePicked) {
+                console.log(`sorting photos by date ${datePicked}`)
         }
         return ( 
             <>
