@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch, useParams } from 'rea
 import NavBar from '../../Components/NavBar/NavBar';
 import Signup from '../Signup/Signup'
 import Login from '../Login/Login'
+import ProfilePage from '../ProfilePage/ProfilePage'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import UserPhotos from '../../Components/UserPhotos/UserPhotos'
 import './App.css';
@@ -36,9 +37,17 @@ export default function App(props) {
         render={() => 
           <Login history={props.history} handleSignupLogin={handleSignupLogin}/>
         }/>
+        
         <Switch>
           <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}/>
         </Switch>
+
+        <Route 
+        exact path="/profile"
+        render={() => 
+          <ProfilePage
+          user={user} />
+        }/>
     </>
   );
 }
@@ -46,7 +55,6 @@ export default function App(props) {
 function CombineUser(user, setUser) {
   let { gId } = useParams()
   console.log(gId)
-  authService.combineUser(gId, user)
+  // authService.combineUser(gId, user)
   return null
 }
-
