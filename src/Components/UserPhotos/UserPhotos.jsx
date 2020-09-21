@@ -10,8 +10,8 @@ export default function UserPhotos({ user }) {
     }
     async function searchExif(imgUrl) {
         console.log('in component searchExif')
-        const exifData = await photoService.getExif(imgUrl)
-        console.log(exifData)
+        // const exifData = await photoService.getExif(imgUrl)
+        // console.log(exifData)
     }
     return (
         <>

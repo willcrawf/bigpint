@@ -1,5 +1,5 @@
 import { Stream } from 'stream'
-const ExifImage = require('exif').ExifImage
+// const ExifImage = require('exif').ExifImage
 
 
 export function getGPhotos() {
@@ -14,20 +14,28 @@ export function getGPhotos() {
         })
 }
 
-export async function getExif(imgUrl) {
-    let exifData
-    try {
-        fetch(imgUrl, {mode: 'cors'})
-        .then(image => new ExifImage({ image }, (err, exData) => {
-            console.log(exData)
-            return exifData = exData
-            })
-        )
-    } catch (err) {console.log(err)}
-    finally {
-        return exifData
-    }
+export async function getUserPhotos() {
+    return fetch('/')
 }
+
+export async function addPhotoToUser() {
+
+}
+
+// export async function getExif(imgUrl) {
+//     let exifData
+//     try {
+//         fetch(imgUrl, {mode: 'cors'})
+//         .then(image => new ExifImage({ image }, (err, exData) => {
+//             console.log(exData)
+//             return exifData = exData
+//             })
+//         )
+//     } catch (err) {console.log(err)}
+//     finally {
+//         return exifData
+//     }
+// }
 
 // function createNewStream() {
 //     const newStream = new Stream

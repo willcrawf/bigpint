@@ -5,7 +5,7 @@ import Signup from '../Signup/Signup'
 import Login from '../Login/Login'
 import ProfilePage from '../ProfilePage/ProfilePage'
 import { Card, Icon, Image } from 'semantic-ui-react'
-import UserPhotos from '../../Components/UserPhotos/UserPhotos'
+import AddPhotos from '../AddPhotos/AddPhotos'
 import './App.css';
 import * as authService from '../../service/authService'
 
@@ -25,7 +25,7 @@ export default function App(props) {
   return (
     <>
     <NavBar user={user} handleLogout={handleLogout} />
-      <UserPhotos user={user} />
+      <AddPhotos user={user} />
       {/* {props.match || 'nope'} */}
       <Route 
         exact path="/signup"

@@ -2,31 +2,41 @@ import React, { useState } from 'react'
 import * as photoService from '../../service/photoService'
 
 
-export default function UserPhotos({ user }) {
-    const [photos, setPhotos] = useState([])
+export default function AddPhotos({ user }) {
+    const [photos, setPhotos] = useState(photoService.getGPhotos())
+    const [profilePhotos, setProfilePhotos] = useState(photoService.getUserPhotos())
+
     async function searchGPhotos() {
         const photos = await photoService.getGPhotos()
         setPhotos(photos)
     }
-    async function searchExif(imgUrl) {
-        console.log('in component searchExif')
-        const exifData = await photoService.getExif(imgUrl)
-        console.log(exifData)
+    async function getUserPhotos() {
+        const profilePhotos = await photoService.getUserPhotos()
+        setProfilePhotos(profilePhotos)
+    }
+    async function addToProfilePhotos(photo) {
+        const profilePhotos = await photoService.addPhotoToUser()
+
+
+        // id productUrl baseUrl mimeType mediaMetadata filename
     }
     return (
         <>
-        {user && !photos.length &&
-        <>
-            <a href="http://localhost:3001/auth/google">Sign in to google</a>
-            <button onClick={searchGPhotos}>search gPhotos</button>
-        </>
+            {user && profilePhotos.length &&
+                <>
+                    <a href="http://localhost:3001/auth/google">Sign in to google</a>
+                    <button onClick={searchGPhotos}>search gPhotos</button>
+                </>
             }
-            {photos.length ? 
-            <>
-                {photos.map((photo, i) => <button key={i} onClick={() => searchExif(`${photo.baseUrl}`)}><img src={photo.baseUrl} alt=""/></button>)}
-            </>
+            {!photos.length ?
+                <>
+                    <a href="http://localhost:3001/auth/google">Sign in to google</a>
+                    <button onClick={searchGPhotos}>search gPhotos</button>
+                </>
                 :
-                <h3>please sign up or login</h3>
+                <>
+                    {photos.map((photo, i) => <button key={i} onClick={() => addToProfilePhotos(photo)}><img src={photo.baseUrl} alt="" /></button>)}
+                </>
             }
         </>
     )
