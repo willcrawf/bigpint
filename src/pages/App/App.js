@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch, useParams } from 'rea
 import NavBar from '../../Components/NavBar/NavBar';
 import Signup from '../Signup/Signup'
 import Login from '../Login/Login'
+import ProfilePage from '../ProfilePage/ProfilePage'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import UserPhotos from '../../Components/UserPhotos/UserPhotos'
 import './App.css';
@@ -10,7 +11,7 @@ import * as authService from '../../service/authService'
 
 
 export default function App(props) {
-  const [user, setUser] = useState(authService.getUser())
+  let [user, setUser] = useState(authService.getUser())
 
   
   function handleSignupLogin() {
@@ -36,15 +37,17 @@ export default function App(props) {
         render={() => 
           <Login history={props.history} handleSignupLogin={handleSignupLogin}/>
         }/>
-        <Route 
-        exact path="/login"
-        render={() => 
-          <Profile
-          user = {user} />
-        }/>
+        
         <Switch>
           <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}/>
         </Switch>
+
+        <Route 
+        exact path="/profile"
+        render={() => 
+          <ProfilePage
+          user = {user} />
+        }/>
     </>
   );
 }
@@ -55,4 +58,3 @@ function CombineUser(user, setUser) {
   authService.combineUser(gId, user)
   return null
 }
-
