@@ -1,16 +1,15 @@
 import React from 'react'
-import { userFromToken } from '../../service/tokenService'
 
-function FavoriteDates({user}) {
+function FavoriteDates({ user, sortPhotosByDate }) {
     return (
         <>
         <h3>Favorite Dates:</h3>
         <ol>
-            <li><a href="">Fav 1</a></li>
-            <li><a href="">Fav 2</a></li>
-            <li><a href="">Fav 3</a></li>
-            <li><a href="">Fav 4</a></li>
-            <li><a href="">Fav 5</a></li>
+            <li><button onClick={sortPhotosByDate(user.faveDates[0])}>{user.faveDates[0]}</button></li>
+            <li><button onClick={sortPhotosByDate(user.faveDates[0])}>{user.faveDates[1]}</button></li>
+            <li><button onClick={sortPhotosByDate(user.faveDates[0])}>{user.faveDates[2]}</button></li>
+            <li><button onClick={sortPhotosByDate(user.faveDates[0])}>{user.faveDates[3]}</button></li>
+            <li><button onClick={sortPhotosByDate(user.faveDates[0])}>{user.faveDates[4]}</button></li>
         </ol>
 
         <br></br>
