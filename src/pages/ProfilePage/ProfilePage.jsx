@@ -6,7 +6,7 @@ function ProfilePage(props) {
         return ( 
             <>
             <h1>{props.user.name}'s Profile</h1>
-            < FavoriteDates user = {props.user} />
+            <FavoriteDates user={props.user} />
             </>
          );
     }
