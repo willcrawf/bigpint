@@ -19,6 +19,7 @@ const indexRouter = require('./routes/index')
 const onesRouter = require('./routes/typeones')
 const authRouter = require('./routes/auth')
 const apisRouter = require('./routes/apis')
+const uploadRouter = require('./routes/upload')
 const sessionMiddleware = session({
     resave: true,
     saveUninitialized: true,
@@ -29,7 +30,7 @@ const sessionMiddleware = session({
 
 const app = express()
 
-app.set('view engine', 'pug')
+app.set('view engine', 'ejs')
 
 app.use(cors())
 app.use(logger('dev'))
@@ -48,6 +49,7 @@ app.use('/', indexRouter)
 app.use('/typeones', onesRouter)
 app.use('/api/auth', authRouter)
 app.use('/apis', apisRouter)
+app.use('/upload', uploadRouter)
 // app.use('/typetwos', twosRouter)
 
 const gAuth = require('./config/gPassport');
