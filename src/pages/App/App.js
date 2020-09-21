@@ -8,6 +8,7 @@ import { Card, Icon, Image } from 'semantic-ui-react'
 import UserPhotos from '../../Components/UserPhotos/UserPhotos'
 import './App.css';
 import * as authService from '../../service/authService'
+//import bill from '../../service/billboardService';
 
 
 export default function App(props) {
@@ -24,6 +25,12 @@ export default function App(props) {
   
   return (
     <>
+    <form action="/upload" method="POST" encType="multipart/form-data">
+      <input type="file" accept="image/*" name="photo" />
+      <input type="submit" value="upload" />
+    </form>
+    //button to fetch top 10
+    //<button onClick={getBill}>Top 10</button>
     <NavBar user={user} handleLogout={handleLogout} />
       <UserPhotos user={user} />
       {/* {props.match || 'nope'} */}
