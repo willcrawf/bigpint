@@ -1,5 +1,6 @@
 const axios = require("axios");
 
+export default function getTopTen(){
 axios({
     "method":"GET",
     "url":"https://billboard-api2.p.rapidapi.com/hot-100",
@@ -19,3 +20,4 @@ axios({
     .catch((error)=>{
       console.log(error)
     })
+   }

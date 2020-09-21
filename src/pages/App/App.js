@@ -1,60 +1,54 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch, useParams } from 'react-router-dom'
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import NavBar from '../../Components/NavBar/NavBar';
 import Signup from '../Signup/Signup'
 import Login from '../Login/Login'
-import ProfilePage from '../ProfilePage/ProfilePage'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import UserPhotos from '../../Components/UserPhotos/UserPhotos'
 import './App.css';
+import bill from '../../service/billboardService';
 import * as authService from '../../service/authService'
 
 
-export default function App(props) {
-  const [user, setUser] = useState(authService.getUser())
+class App extends Component {
+  state = {
+    user: authService.getUser()
+  }
 
-  
-  function handleSignupLogin() {
-    setUser(authService.getUser())
+  handleSignupLogin = () => {
+    this.setState({user: authService.getUser()})
   }
-  function handleLogout() {
+  handleLogout = () => {
     authService.logout()
-    setUser(null)
+    this.setState({user: null})
   }
-  
+  render() {
+    const { user } = this.state;
   return (
     <>
-    <NavBar user={user} handleLogout={handleLogout} />
-      <UserPhotos user={user} />
-      {/* {props.match || 'nope'} */}
+    {/*
+    form to upload pics
+    <form action="/upload" method="post" enctype="multipart/form-data">
+      <input type="file" accept="image/*" name="photo" />
+      <input type="submit" value="upload" />
+    </form>
+    button to fetch top 10
+    <button onClick={bill}>Top 10</button> */}
+    <NavBar user={user} handleLogout={this.handleLogout} />
+      <UserPhotos user={user}/>
       <Route 
         exact path="/signup"
         render={() => 
-          <Signup history={props.history} handleSignupLogin={handleSignupLogin}/>
+          <Signup history={this.props.history} handleSignupLogin={this.handleSignupLogin}/>
         }/>
         <Route 
         exact path="/login"
         render={() => 
-          <Login history={props.history} handleSignupLogin={handleSignupLogin}/>
-        }/>
-        
-        <Switch>
-          <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}></Route>
-        </Switch>
-
-        <Route 
-        exact path="/profile"
-        render={() => 
-          <ProfilePage
-          user={user} />
+          <Login history={this.props.history} handleSignupLogin={this.handleSignupLogin}/>
         }/>
     </>
   );
 }
-
-function CombineUser(user, setUser) {
-  let { gId } = useParams()
-  console.log(gId)
-  // authService.combineUser(gId, user)
-  return null
 }
+
+export default App;
