@@ -84,7 +84,7 @@ export default function exifImg()
         drev[0]=mon;drev[1]=day;
         let djoin=drev.join(':');
         //formats date to acceptable format for api and calls billboard function
-        //billboard(gpsD.replace(/:/g,'-'))
+        billboard(gpsD.replace(/:/g,'-'))
         //displays the location and date on the table
         document.getElementById('loc').innerHTML=`<p><img src="https://flagcdn.com/${b[7].toLowerCase()}.svg" width="25px" alt="${b[10]}">${b[16]}</p>`;//7 for initials
         document.getElementById('dates').innerHTML=`<p>on ${djoin.replace(/:/g,' ')}</p>`
