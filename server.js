@@ -85,4 +85,7 @@ app.use((err, req, res, next) => {
     res.render('error')
 })
 
+
+///GOOGLE PHOTOS
+
 module.exports = app
