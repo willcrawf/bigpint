@@ -19,8 +19,10 @@ export default function exifImg()
   EXIF.getData(img, function()
   {
     //gets all meta-data
-    //let allMetaData = EXIF.getAllTags(this);
-    //console.log(allMetaData)
+    let allMetaData = EXIF.getAllTags(this);
+    console.log(allMetaData)
+    //check for gps data
+    if(EXIF.getTag(this,"GPSLatitude")===undefined || EXIF.getTag(this,"GPSLongitude"===undefined)){return console.log('error: No GPS')}
 
 /** 
  * 
@@ -55,25 +57,37 @@ export default function exifImg()
     const geo=process.env.REACT_APP_GEO_API;
     axios.get('https://geocode.xyz/'+LaDD+','+LoDD+'?geoit=json&auth='+geo)
       .then(response => {
+        //console.log(response)
         //months for prettier dates
         const months = ["","January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
         //breaks down exif data into usable arrays
         let a=Object.values(response)
         let b=Object.values(a[0])
+        console.log(b)
         //formats the date into a presentable format
         let dsplit=gpsD.split(':');
         let drev=dsplit.reverse();
         drev[1]=months[drev[1]];
         let mon=drev[1];
         let day=drev[0];
+        //making day look pretty
+        let ending = ["th","st","nd","rd"];
+        let endD = day.length-1;
+        switch(day[endD])
+        {
+          case '1':day+=ending[1];break;
+          case '2':day+=ending[2];break;
+          case '3':day+=ending[3];break;
+          default:day+=ending[0];
+        }
         //swaps day with month to make dd/mm/yyyy format
         drev[0]=mon;drev[1]=day;
         let djoin=drev.join(':');
         //formats date to acceptable format for api and calls billboard function
         billboard(gpsD.replace(/:/g,'-'))
         //displays the location and date on the table
-        document.getElementById('loc').innerHTML=`<p>${b[16]}</p>`;
-        document.getElementById('dates').innerHTML=`<p>${djoin.replace(/:/g,' / ')}</p>`
+        document.getElementById('loc').innerHTML=`<p><img src="https://flagcdn.com/${b[7].toLowerCase()}.svg" width="25px" alt="${b[10]}">${b[16]}</p>`;//7 for initials
+        document.getElementById('dates').innerHTML=`<p>on ${djoin.replace(/:/g,' ')}</p>`
         }).catch(error => {
             console.log(error);
           });
