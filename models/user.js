@@ -9,7 +9,7 @@ const userSchema = new Schema({
     email: {type: String, unique: true, lowercase: true},
     password: String,
     photos: [{type: Schema.Types.ObjectId, ref: 'Photo'}],
-    faveDates: {type: [Date], default: ['2021-10-05T14:48:00.000Z', '2020-10-05T14:48:00.000Z', '2019-10-05T14:48:00.000Z', '2018-10-05T14:48:00.000Z', '2017-10-05T14:48:00.000Z']},
+    favDates: {type: [Date], default:['09/20/2020', '10/22/1999']},
     gId: String,
     gName: String,
     // gEmail: String,

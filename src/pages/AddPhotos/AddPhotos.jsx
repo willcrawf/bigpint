@@ -42,14 +42,11 @@ export default function AddPhotos({ user, setUser }) {
         // id productUrl baseUrl mimeType mediaMetadata filename
     return (
         <div className="add-photos-pg">
-            {user.photos.length ?
+            {user.photos && user.photos.length > 0 &&
             <> 
                 <div className="user-photos">
-                    {user.photos.map((photo, i) => <div className="img-wrapper" key={i} onClick={() => getPhoto(photo.baseUrl)}><img src={photo.baseUrl} alt="" /></div>)}
+                    {user.photos.map((photo, i) => <div className="img-wrapper" key={i} onClick={() => removeFromProfilePhotos(photo._id)}><img src={photo.baseUrl} alt="" /></div>)}
                 </div>
-                </>
-                :
-                <>
                 </>
             }
             {gPhotos.length ?

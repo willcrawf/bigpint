@@ -41,19 +41,20 @@ export function login(info) {
     .then(({ token }) => tokenService.setToken(token))
 }
 
-export function combineUser(gId, user) {
-    const fetchObject = { gId, user }
-    fetch(BASE_URL + 'updateUser', {
+
+export function sendUserGUser(gId, userId, cb) {
+    const fetchObject = { gId, userId }
+    fetch('/apis/updateUser', {
         method: 'POST',
         headers: new Headers({'Content-Type': 'application/json'}),
         body: JSON.stringify(fetchObject)
     })
-    .then(resp => 'a')
-    // .then(res => {
-    //     if (res.ok) return res.json()
-    //     throw new Error('bad creds')
-    // })
-    // .then(({ token }) => tokenService.setToken(token))
+    .then(resp => resp.json())
+    .then(({ comboUser }) => {
+        console.log(`in the fe ffetch and info ${comboUser.name, comboUser.gId}`)
+        cb(null, comboUser)
+        return comboUser
+    })
 }
 
 export function logout() {
