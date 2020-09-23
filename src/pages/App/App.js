@@ -6,13 +6,12 @@ import Login from '../Login/Login'
 import ProfilePage from '../ProfilePage/ProfilePage'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import UserPhotos from '../../Components/UserPhotos/UserPhotos'
+import PicDetails from '../../Components/UserPhotos/PhotoDetails'
 import './App.css';
 import * as authService from '../../service/authService'
-import exifImg from '../../service/gpsService';
 
 export default function App(props) {
   const [user, setUser] = useState(authService.getUser())
-
   
   function handleSignupLogin() {
     setUser(authService.getUser())
@@ -21,27 +20,10 @@ export default function App(props) {
     authService.logout()
     setUser(null)
   }
-  function getinfo()
-  {
-    exifImg();
-  }
+ 
+
   return (
     <>
-    <form action="/upload" method="POST" encType="multipart/form-data">
-      <input type="file" accept="image/*" name="photo" />
-      <input type="submit" value="upload" />
-    </form>
-    <img src={`images/a.jpeg`} id="pic" alt=""></img>
-    {/* button to fetch exif and billboard info */}
-    <button onClick={getinfo}>Info</button>
-    <table>
-      <tbody>
-      <tr>
-        <td id="loc"></td><td id="dates"></td>
-      </tr>
-      <tr><td id="songs" colSpan="2"></td></tr>
-      </tbody>
-    </table>
     <NavBar user={user} handleLogout={handleLogout} />
       <UserPhotos user={user} />
       {/* {props.match || 'nope'} */}
@@ -66,6 +48,11 @@ export default function App(props) {
           <ProfilePage
           user={user} />
         }/>
+        <form action="/upload" method="POST" encType="multipart/form-data">
+          <input type="file" accept="image/*" name="photo" />
+          <input type="submit" value="upload" />
+        </form>
+        <PicDetails />
     </>
   );
 }
