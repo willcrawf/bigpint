@@ -3,24 +3,39 @@ import { Stream } from 'stream'
 
 
 export function getGPhotos() {
-    console.log('in the photo service, sending fetch')
     return fetch('/apis/gPhotos', {
         method: 'POST'
     }, { mode: "cors" })
         .then(res => res.json())
-        .then(({ photos }) => {
-            console.log(photos)
-            return photos
-        })
+        .then(({ photos }) => photos)
 }
 
-export async function getUserPhotos() {
-    return fetch('/')
+export function getUserPhotos(userId) {
+    console.log('in the get user photos fe')
+    return fetch(`/apis/users/${userId}/photos`, {mode: 'cors'})
+            .then(res => res.json())
+            .then(({ photos }) => photos)
 }
 
-export async function addPhotoToUser() {
-
+export function addPhotoToUser(photo, userId) {
+    return fetch(`/apis/users/${userId}/photos`, {
+        method: 'POST',
+        headers: new Headers({ "Content-Type": "application/json" }),
+        body: JSON.stringify(photo)
+    }, { mode: "cors" })
+        .then(res => res.json())
+        .then(({ newPhoto }) => newPhoto)
 }
+
+export function removePhotoFromUser(photoId, userId) {
+    console.log('in the remove photo fxn')
+    return fetch(`/apis/users/${userId}/photos/${photoId}`, {
+        method: 'DELETE'
+    }, { mode: "cors" })
+    .then(res => res.json())
+    .then(({ user }) => user) 
+}
+
 
 // export async function getExif(imgUrl) {
 //     let exifData

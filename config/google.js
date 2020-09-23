@@ -6,7 +6,8 @@ const config = {
     port: 3001,
     scopes: [
       'https://www.googleapis.com/auth/photoslibrary.readonly',
-      'profile'
+      'profile',
+      'https://www.googleapis.com/auth/photoslibrary.sharing',
     ],
     photosToLoad: 100,
     searchPageSize: 100,

@@ -9,6 +9,7 @@ export default function NavBar({ user, handleLogout }) {
       <div>Welcome: {user.name}</div>
       <NavLink exact to="/" onClick={handleLogout}>Logout</NavLink>
       <NavLink exact to="/profile">Profile</NavLink>
+      <NavLink exact to="/shared">Shared</NavLink>
       </>
       :
       <>

@@ -1,43 +1,67 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import * as photoService from '../../service/photoService'
+import * as authService from '../../service/authService'
+import './AddPhotos.css'
 
 
-export default function AddPhotos({ user }) {
-    const [photos, setPhotos] = useState(photoService.getGPhotos())
-    const [profilePhotos, setProfilePhotos] = useState(photoService.getUserPhotos())
 
-    async function searchGPhotos() {
-        const photos = await photoService.getGPhotos()
-        setPhotos(photos)
+export default function AddPhotos({ user, setUser }) {
+    const [gPhotos, setGPhotos] = useState([])
+    const [upImg, setUpImg] = useState({ url: '' })
+    
+    useEffect(() => {
+    }, [user])
+
+    async function setPhotosFromGoogle() {
+        const response = await photoService.getGPhotos()
+        const retPhotos = response[0] ? response : []
+        setGPhotos(retPhotos)
     }
-    async function getUserPhotos() {
-        const profilePhotos = await photoService.getUserPhotos()
-        setProfilePhotos(profilePhotos)
-    }
+    // async function setUserPhotos() {
+    //     const profilePhotos = await photoService.getUserPhotos()
+    //     setProfilePhotos(profilePhotos)
+    // }
     async function addToProfilePhotos(photo) {
-        const profilePhotos = await photoService.addPhotoToUser()
+        await photoService.addPhotoToUser(photo, user._id)
+        const updatedUser = await authService.getUser(user._id)
+        setUser(updatedUser)
+    }
 
+    async function removeFromProfilePhotos(photoId) {
+        await photoService.removePhotoFromUser(photoId, user._id)
+        const updatedUser = await authService.getUser(user._id)
+        setUser(updatedUser)
+    }
+
+    function getPhoto(url) {
+        const img = new Image()
+        img.url = `${url}`
+        setUpImg(img)
+    }
 
         // id productUrl baseUrl mimeType mediaMetadata filename
-    }
     return (
-        <>
-            {user && profilePhotos.length &&
-                <>
-                    <a href="http://localhost:3001/auth/google">Sign in to google</a>
-                    <button onClick={searchGPhotos}>search gPhotos</button>
-                </>
-            }
-            {!photos.length ?
-                <>
-                    <a href="http://localhost:3001/auth/google">Sign in to google</a>
-                    <button onClick={searchGPhotos}>search gPhotos</button>
+        <div className="add-photos-pg">
+            {user.photos.length ?
+            <> 
+                <div className="user-photos">
+                    {user.photos.map((photo, i) => <div className="img-wrapper" key={i} onClick={() => getPhoto(photo.baseUrl)}><img src={photo.baseUrl} alt="" /></div>)}
+                </div>
                 </>
                 :
                 <>
-                    {photos.map((photo, i) => <button key={i} onClick={() => addToProfilePhotos(photo)}><img src={photo.baseUrl} alt="" /></button>)}
                 </>
             }
-        </>
+            {gPhotos.length ?
+                <div className="g-photos">
+                    {gPhotos.map((photo, i) => <div className="img-wrapper" key={i} onClick={() => addToProfilePhotos(photo)}><img src={photo.baseUrl} alt="" /></div>)}
+                </div>
+                :
+                <>
+                    <a href="http://localhost:3001/auth/google">Sign in to google</a>
+                    <button onClick={setPhotosFromGoogle}>search gPhotos</button>
+                </>
+            }
+        </div>
     )
 }

@@ -1,9 +1,20 @@
 import React from 'react'
-import UserPhotos from '../Components/UserPhotos/UserPhotos'
 import * as tokenService from './tokenService'
 const BASE_URL = '/api/auth/'
 
-export function getUser() {
+export function getUser(userId) {
+    if (userId) {
+        return fetch(`${BASE_URL}/updateTokenUser/${userId}`, {
+            method: 'POST'
+        },
+        {mode: 'cors'})
+        .then(res => res.json())
+        .then(({ token }) => {
+            tokenService.removeToken()
+            tokenService.setToken(token)
+        })
+        .then(response => tokenService.userFromToken())
+    }
     return tokenService.userFromToken()
 }
 

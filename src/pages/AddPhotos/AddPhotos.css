@@ -1,0 +1,30 @@
+.add-photos-pg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user-photos {
+    display: flex;
+    flex-flow: row wrap;
+    border: solid darkgreen 0.5rem;
+    border-radius: 1rem;
+}
+.g-photos {
+    display: flex;
+    flex-flow: row wrap;
+    border: solid darkred 0.5rem;
+    border-radius: 1rem;
+}
+.img-wrapper {
+    width: 20vh;
+    flex-grow: 1;
+}
+
+img {
+    max-width: 20vh;
+    min-height: 70%;
+    object-fit: cover;
+    vertical-align: bottom;
+    border-radius: 1rem;
+    margin: 1rem;
+}

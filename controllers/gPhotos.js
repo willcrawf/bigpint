@@ -4,7 +4,7 @@ const config = require('../config/google')
 
 async function returnGPhotos(req, res) {
     const filters = {contentFilter: {}, mediaTypeFilter: {mediaTypes: ["PHOTO"]}}
-    let parameters = {filters, pageSize: 100}
+    let parameters = {filters, pageSize: 10}
     let nextPageToken = null
     let authToken = req.user.token;
     let photos = []
@@ -23,10 +23,12 @@ async function returnGPhotos(req, res) {
                 })
                 photos = photos.concat(result.mediaItems)
                 parameters.pageToken = result.nextPageToken
-            } while (photos.length < 400 && parameters.pageToken != null)
+            } while (photos.length < 20 && parameters.pageToken != null)
         } catch (err) {console.log(err)}
         res.status(200).json({ photos })
 }
+
+module.exports = { returnGPhotos }
 
 // async function searchGooglePhotos(authToken, params) {
 //     let photos = [];
@@ -78,19 +80,7 @@ async function returnGPhotos(req, res) {
       
 //         console.log('Search complete.');
 //         return {photos, params, error};
-//     }      
-
-
-
-module.exports = { returnGPhotos }
-  
-  
-  
-  
-  
-  
-  
-    
+//     }       
 
     // let albums = [];
     //         let nextPageToken = null;
