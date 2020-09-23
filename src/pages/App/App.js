@@ -9,6 +9,7 @@ import AddPhotos from '../AddPhotos/AddPhotos'
 import './App.css';
 import * as authService from '../../service/authService'
 import Shared from '../Shared/Shared';
+import _ from 'lodash'
 
 
 export default function App(props) {
@@ -21,8 +22,6 @@ export default function App(props) {
     authService.logout()
     setUser(null)
   }
-
-  
 
   return (
     <>
@@ -47,7 +46,9 @@ export default function App(props) {
           <Login history={props.history} handleSignupLogin={handleSignupLogin}/>
         }/>
         <Switch>
-          <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}><Redirect exact to="/addPhotos" /></Route>
+          {user &&
+          <Route path="/google/:gId" children={<CombineUser userId={user._id} setUser={setUser}/>}></Route>
+          }
         </Switch>
         <Route 
         exact path="/profile"
@@ -63,9 +64,15 @@ export default function App(props) {
   );
 }
 
-function CombineUser(user) {
+function CombineUser({ userId, setUser }) {
   let { gId } = useParams()
   console.log(gId)
-  // App.combineUser(gId)
-  return null
+  combineUser(gId, userId, setUser)
+  return <Redirect exact to="/addPhotos" />
+}
+
+function combineUser(gId, userId, setUser) {
+  console.log(`in the lower combine user with gId ${gId} and userId ${userId} and setUser ${setUser}`)
+  authService.sendUserGUser(gId, userId, (err, user) => 
+  setUser(authService.getUser(userId)))
 }

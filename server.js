@@ -70,7 +70,7 @@ app.get(
         return res.redirect(`http://localhost:3000/google/${req.user.gId}`);
       }
       console.log(`user has logged in no update, name ${req.user.name} and gId ${req.user.gId}`)
-      res.redirect('http://localhost:3000');
+      res.redirect('http://localhost:3000/addPhotos');
     });
 
 app.get('/*', function (req, res) {

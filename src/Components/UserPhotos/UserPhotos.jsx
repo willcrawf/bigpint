@@ -4,6 +4,7 @@ import * as photoService from '../../service/photoService'
 
 export default function UserPhotos({ user }) {
     const [photos, setPhotos] = useState([])
+    
     async function searchGPhotos() {
         const photos = await photoService.getGPhotos()
         setPhotos(photos)
