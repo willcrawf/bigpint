@@ -5,12 +5,13 @@ import Signup from '../Signup/Signup'
 import Login from '../Login/Login'
 import ProfilePage from '../ProfilePage/ProfilePage'
 import { Card, Icon, Image } from 'semantic-ui-react'
+import UserPhotos from '../../Components/UserPhotos/UserPhotos'
+import PicDetails from '../../Components/UserPhotos/PhotoDetails'
 import AddPhotos from '../AddPhotos/AddPhotos'
 import './App.css';
 import * as authService from '../../service/authService'
 import Shared from '../Shared/Shared';
 import _ from 'lodash'
-
 
 export default function App(props) {
   const [user, setUser] = useState(authService.getUser())
@@ -22,7 +23,6 @@ export default function App(props) {
     authService.logout()
     setUser(null)
   }
-
   return (
     <>
     <NavBar user={user} handleLogout={handleLogout} />
@@ -57,9 +57,10 @@ export default function App(props) {
           user={user} />
         }/>
         <form action="/upload" method="POST" encType="multipart/form-data">
-        <input type="file" accept="image/*" name="photo" />
-        <input type="submit" value="upload" />
+          <input type="file" accept="image/*" name="photo" />
+          <input type="submit" value="upload" />
         </form>
+        <PicDetails />
     </>
   );
 }
