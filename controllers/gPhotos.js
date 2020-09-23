@@ -28,6 +28,8 @@ async function returnGPhotos(req, res) {
         res.status(200).json({ photos })
 }
 
+module.exports = { returnGPhotos }
+
 // async function searchGooglePhotos(authToken, params) {
 //     let photos = [];
 //     let nextPageToken = null;
@@ -78,19 +80,7 @@ async function returnGPhotos(req, res) {
       
 //         console.log('Search complete.');
 //         return {photos, params, error};
-//     }      
-
-
-
-module.exports = { returnGPhotos }
-  
-  
-  
-  
-  
-  
-  
-    
+//     }       
 
     // let albums = [];
     //         let nextPageToken = null;

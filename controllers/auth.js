@@ -8,8 +8,10 @@ const getUser = (req, res) => {
 const signup = (req, res) => {
     try {
         User.create(req.body, (err, user) => {
-            const token = createJwt(user)
-            res.json({ token })
+            user.populate('photos', (err, user) => {
+                const token = createJwt(user)
+                res.json({ token })
+            })
         })
     } catch (err) {res.status(400).send({ 'err': err.errmsg })}
 }
@@ -20,8 +22,10 @@ const login = ({ body }, res) => {
             if (!user) return res.status(401).json({ err: 'bad creds' })
             user.checkPW(body.password, (err, isMatch) => {
                 if (isMatch) {
-                    const token = createJwt(user)
-                    res.json({ token })
+                    user.populate('photos', (err, user) => {
+                        const token = createJwt(user)
+                        res.json({ token })
+                    })
                 } else {
                     res.status(401).json({ err: 'bad creds' })
                 }
@@ -42,6 +46,19 @@ const updateUser = async (req, res) => {
 
 }
 
+const updateTokenUser = (req, res) => {
+    console.log('in the update token user bbbbbbbbb')
+    try {
+        User.findOne({ _id: req.params.userId })
+           .populate('photos')
+            .then(user => {
+                const token = createJwt(user)
+                res.json({ token })
+            })
+            .catch(err => console.log('pop err  ' + err))
+    } catch (err) {res.status(401).json(err)}
+} 
+
 function createJwt(user) {
     return jwt.sign(
         {user},
@@ -50,4 +67,4 @@ function createJwt(user) {
     )
 }
 
-module.exports = { getUser, signup, login, updateUser }
+module.exports = { getUser, signup, login, updateUser, updateTokenUser }

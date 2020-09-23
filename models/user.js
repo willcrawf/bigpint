@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const Photo = require('./photo')
 const bcrypt = require('bcrypt')
 const SALT_ROUNDS = 7;
 
@@ -7,7 +8,7 @@ const userSchema = new Schema({
     name: String,
     email: {type: String, unique: true, lowercase: true},
     password: String,
-    photos: {type: [Schema.Types.ObjectId], ref: 'Photo', default: []},
+    photos: [{type: Schema.Types.ObjectId, ref: 'Photo'}],
     favDates: {type: [Date], default:['09/20/2020', '10/22/1999']},
     gId: String,
     gName: String,
@@ -36,5 +37,7 @@ userSchema.pre('save', function(next) {
 userSchema.methods.checkPW = function(tryPW, done) {
     bcrypt.compare(tryPW, this.password, done)
 }
+
+
 
 module.exports = mongoose.model('User', userSchema)

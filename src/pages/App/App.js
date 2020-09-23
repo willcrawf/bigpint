@@ -7,8 +7,11 @@ import ProfilePage from '../ProfilePage/ProfilePage'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import UserPhotos from '../../Components/UserPhotos/UserPhotos'
 import PicDetails from '../../Components/UserPhotos/PhotoDetails'
+import AddPhotos from '../AddPhotos/AddPhotos'
 import './App.css';
 import * as authService from '../../service/authService'
+import Shared from '../Shared/Shared';
+import _ from 'lodash'
 
 export default function App(props) {
   const [user, setUser] = useState(authService.getUser())
@@ -20,13 +23,18 @@ export default function App(props) {
     authService.logout()
     setUser(null)
   }
- 
-
   return (
     <>
     <NavBar user={user} handleLogout={handleLogout} />
-      <UserPhotos user={user} />
-      {/* {props.match || 'nope'} */}
+      <Route exact path='/addPhotos'
+        render={() => 
+          <AddPhotos user={user} setUser={setUser} />
+        } 
+      />
+      <Route exact path="/shared"
+        render={() => 
+        <Shared />
+      } />
       <Route 
         exact path="/signup"
         render={() => 
@@ -37,11 +45,11 @@ export default function App(props) {
         render={() => 
           <Login history={props.history} handleSignupLogin={handleSignupLogin}/>
         }/>
-        
         <Switch>
-          <Route path="/google/:gId" children={<CombineUser user={user} setUser={setUser}/>}></Route>
+          {user &&
+          <Route path="/google/:gId" children={<CombineUser userId={user._id} setUser={setUser}/>}></Route>
+          }
         </Switch>
-
         <Route 
         exact path="/profile"
         render={() => 
@@ -57,9 +65,15 @@ export default function App(props) {
   );
 }
 
-function CombineUser(user, setUser) {
+function CombineUser({ userId, setUser }) {
   let { gId } = useParams()
   console.log(gId)
-  // authService.combineUser(gId, user)
-  return null
+  combineUser(gId, userId, setUser)
+  return <Redirect exact to="/addPhotos" />
+}
+
+function combineUser(gId, userId, setUser) {
+  console.log(`in the lower combine user with gId ${gId} and userId ${userId} and setUser ${setUser}`)
+  authService.sendUserGUser(gId, userId, (err, user) => 
+  setUser(authService.getUser(userId)))
 }

@@ -4,14 +4,15 @@ import * as photoService from '../../service/photoService'
 
 export default function UserPhotos({ user }) {
     const [photos, setPhotos] = useState([])
+    
     async function searchGPhotos() {
         const photos = await photoService.getGPhotos()
         setPhotos(photos)
     }
     async function searchExif(imgUrl) {
         console.log('in component searchExif')
-        const exifData = await photoService.getExif(imgUrl)
-        console.log(exifData)
+        // const exifData = await photoService.getExif(imgUrl)
+        // console.log(exifData)
     }
     return (
         <>

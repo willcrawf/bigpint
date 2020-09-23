@@ -21,7 +21,7 @@ export default function Signup(props) {
         try {
             await authService.signup(state)
             props.handleSignupLogin()
-            props.history.push('/')
+            props.history.push('/addPhotos')
         } catch (err) {console.log(err)}
     }
 

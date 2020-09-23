@@ -20,7 +20,7 @@ export default function Login(props) {
         try {
             await authService.login(state)
             props.handleSignupLogin()
-            props.history.push('/')
+            props.history.push('/addPhotos')
         } catch (err) {console.log(err)}
     }
 

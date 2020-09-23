@@ -1,10 +1,8 @@
-const express = require('express')
-const router = express.Router()
+const router = require('express').Router()
 const multer = require('multer');
-const upctrl = require('../controllers/upload')
-//assigns directory where pics will be stored
+const upCtrlr = require('../controllers/upload')
 const upload = multer({dest:'images'});
 //photo is name of the input element
-router.post('/', upload.single('photo'), upctrl.uploading)
+router.post('/', upload.single('photo'), upCtrlr.uploading)
 
 module.exports = router
